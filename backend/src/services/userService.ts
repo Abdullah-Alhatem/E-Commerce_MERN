@@ -22,7 +22,7 @@ export const register = async ({
     return { data: "User already exists!", statusCode: 400 };
   }
 
-  const hashedPassword = await bcrypt.hash(password, 10); // hash return a Promise
+  const hashedPassword = await bcrypt.hash(password, 10); // *** عشوائي Salt وهي عباره عن عدد مرات تطبيق خوارزمية التشفير وفي كل مرة يتم اعطاء ( 10 = Rounds) *** // hash return a Promise
   const newUser = new userModel({
     firstName,
     lastName,
