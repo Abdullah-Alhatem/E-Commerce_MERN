@@ -2,7 +2,6 @@ import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import Container from "@mui/material/Container";
@@ -10,12 +9,14 @@ import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import ShoppingCart from "@mui/icons-material/ShoppingCart";
+import IconButton from "@mui/material/IconButton";
 import { useAuth } from "../context/Auth/AuthContext";
-import { Button, Grid2 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { Badge, Button, Grid2 } from "@mui/material";
 
 function Navbar() {
-  const { username, isAuthenticated , logout } = useAuth();
+  const { username, isAuthenticated, logout } = useAuth();
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
@@ -38,7 +39,11 @@ function Navbar() {
     logout();
     navigate("/");
     handleCloseUserMenu();
-  }
+  };
+
+  const handleCart = () => {
+    navigate("/cart");
+  };
 
   return (
     <AppBar position="static">
@@ -75,7 +80,18 @@ function Navbar() {
                 Tech Hub
               </Typography>
             </Box>
-            <Box sx={{ flexGrow: 0 }}>
+            <Box
+              gap={4}
+              display="flex"
+              flexDirection="row"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <IconButton aria-label="cart" onClick={handleCart}>
+                <Badge badgeContent={4} color="secondary">
+                  <ShoppingCart className="text-white" />
+                </Badge>
+              </IconButton>
               {isAuthenticated ? (
                 <>
                   <Tooltip title="Open settings">
