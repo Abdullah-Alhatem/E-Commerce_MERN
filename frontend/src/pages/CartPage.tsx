@@ -1,25 +1,56 @@
-import Grid from "@mui/material/Grid2";
-import Typography from "@mui/material/Typography";
-import { useEffect, useState } from "react";
-import { BASE_URL } from "../constants/baseUrl";
-import { useAuth } from "../context/Auth/AuthContext";
 import { useCart } from "../context/Cart/CartContext";
-import { Box } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
+import Button from "@mui/material/Button";
+import ButtonGroup from "@mui/material/ButtonGroup";
 
 const CartPage = () => {
-  const { token } = useAuth();
   const { cartItems, totalAmount } = useCart();
-  const [error, setError] = useState("");
 
-  
   return (
     <>
-      <Grid container spacing={2} sx={{ mt: 2, ml: 4, mr: 4 }}>
+      <Container fixed sx={{ mt: 2 }}>
+        <div className="flex gap-5 flex-col">
         <Typography variant="h4">my cart</Typography>
         {cartItems.map(item => (
-          <Box>{item.title}</Box>
+          <Box
+            display={"flex"}
+            flexDirection={"row"}
+            justifyContent={"space-between"}
+            alignItems={"center"}
+            sx={{
+              border: "1px solid #f2f2f2",
+              borderRadius: 4,
+              marginBottom: 4,
+              paddingTop: 1,
+              paddingBottom: 1,
+              paddingLeft: 3,
+              paddingRight: 3,
+            }}
+          >
+            <Box display="flex" flexDirection="row" alignItems="center" gap={1}>
+              <img src={item.image} width={100} />
+              <Box>
+                <Typography variant="h6">{item.title}</Typography>
+                <Typography>
+                  {item.quantity} x {item.unitPrice} EGP
+                </Typography>
+                <Button>Remove item</Button>
+              </Box>
+            </Box>
+            <ButtonGroup variant="contained" aria-label="Basic button group">
+              <Button>-</Button>
+              <Button>+</Button>
+            </ButtonGroup>
+          </Box>
         ))}
-      </Grid>
+        <Box>
+          <Typography variant="h4">
+            {" "}
+            Total Amount: {totalAmount.toFixed(2)} EGP
+          </Typography>
+        </Box>
+        </div>
+      </Container>
     </>
   );
 };
